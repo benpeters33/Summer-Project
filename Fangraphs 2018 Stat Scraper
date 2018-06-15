@@ -3,13 +3,12 @@ import requests
 import pandas as pd
 from bs4 import BeautifulSoup
 masterdict = {}
-nameslist = []
 
 def addtodict(player, year, source, stats):
     masterdict[player] = {year:{source:stats}}
 
-def test(players):
-    for player in players:
+def test(testplayers = ['Bryce Harper', 'Max Scherzer', 'Sean Doolittle']):
+    for player in testplayers:
         print(masterdict[player][2018]['FANGRAPHS'])
 
 
@@ -25,7 +24,6 @@ for row in tablerows:
     info = row.find_all('td')
     nameraw = info[1]
     player = nameraw.text.strip()
-    nameslist.append(player)
     stats = {};
     counter = 0
     for statname in range(len(info)):
@@ -53,8 +51,7 @@ tablerows = tbody.find_all('tr')
 for row in tablerows:
     info = row.find_all('td')
     nameraw = info[1]
-    player = nameraw.text.strip()
-    nameslist.append(player)
+    player = nameraw.text.strip()           #Strips HTML jargon away leaving just player name
     stats = {};
     counter = 0
     for statname in range(len(info)):
@@ -85,7 +82,6 @@ for row in tablerows:
     info = row.find_all('td')
     nameraw = info[1]
     player = nameraw.text.strip()
-    nameslist.append(player)
     stats = {};
     counter = 0
     for statname in range(len(info)):
@@ -107,9 +103,3 @@ for row in tablerows:
 
 
 
-
-
-
-
-keyplayers = ['Bryce Harper', 'Max Scherzer', 'Craig Kimbrel']
-test(keyplayers)
