@@ -1,0 +1,115 @@
+#Ben Test File
+import requests
+import pandas as pd
+from bs4 import BeautifulSoup
+masterdict = {}
+nameslist = []
+
+def addtodict(player, year, source, stats):
+    masterdict[player] = {year:{source:stats}}
+
+def test(players):
+    for player in players:
+        print(masterdict[player][2018]['FANGRAPHS'])
+
+
+
+#COLLECTS THE NAMES OF ALL QUALIFIED BATTERS FROM FANGRAPHS
+page = requests.get("https://www.fangraphs.com/leaders.aspx?pos=all&stats=bat&lg=all&qual=y&type=8&season=2018&month=0&season1=2018&ind=0&page=1_500") #'page=1_500' added to end of URL to get entire collection rather than 30/50/90 per page
+soup = BeautifulSoup(page.content,'html.parser')
+
+table = soup.find('div', class_="RadGrid RadGrid_FanGraphs")
+tbody = table.find('tbody')
+tablerows = tbody.find_all('tr')
+for row in tablerows:
+    info = row.find_all('td')
+    nameraw = info[1]
+    player = nameraw.text.strip()
+    nameslist.append(player)
+    stats = {};
+    counter = 0
+    for statname in range(len(info)):
+        valueraw = info[counter]
+        value = valueraw.text.strip()
+        theader = table.find('thead')
+        statnameslist = []
+        statnames = theader.find_all('th')
+        for statname in statnames:
+            statname=statname.text.strip()
+            statnameslist.append(statname)
+
+        stats[statnameslist[counter]] = value
+        counter+=1
+    if player not in masterdict:
+        addtodict(player, 2018, 'FANGRAPHS', stats)
+
+#COLLECTS THE NAMES OF ALL QUALIFIED STARTING PITCHERS FROM FANGRAPHS
+page = requests.get("https://www.fangraphs.com/leaders.aspx?pos=all&stats=sta&lg=all&qual=y&type=8&season=2018&month=0&season1=2018&ind=0&team=0&rost=0&age=0&filter=&players=0&page=1_500") #'page=1_500' added to end of URL to get entire collection rather than 30/50/90 per page
+soup = BeautifulSoup(page.content,'html.parser')
+
+table = soup.find('div', class_="RadGrid RadGrid_FanGraphs")
+tbody = table.find('tbody')
+tablerows = tbody.find_all('tr')
+for row in tablerows:
+    info = row.find_all('td')
+    nameraw = info[1]
+    player = nameraw.text.strip()
+    nameslist.append(player)
+    stats = {};
+    counter = 0
+    for statname in range(len(info)):
+        valueraw = info[counter]
+        value = valueraw.text.strip()
+        theader = table.find('thead')
+        statnameslist = []
+        statnames = theader.find_all('th')
+        for statname in statnames:
+            statname=statname.text.strip()
+            statnameslist.append(statname)
+
+        stats[statnameslist[counter]] = value
+        counter+=1
+    if player not in masterdict:
+        addtodict(player, 2018, 'FANGRAPHS', stats)
+
+
+
+#COLLECTS THE NAMES OF ALL QUALIFIED RELIEF PITCHERS FROM FANGRAPHS
+page = requests.get("https://www.fangraphs.com/leaders.aspx?pos=all&stats=rel&lg=all&qual=y&type=8&season=2018&month=0&season1=2018&ind=0&team=0&rost=0&age=0&filter=&players=0&page=1_500") #'page=1_500' added to end of URL to get entire collection rather than 30/50/90 per page
+soup = BeautifulSoup(page.content,'html.parser')
+
+table = soup.find('div', class_="RadGrid RadGrid_FanGraphs")
+tbody = table.find('tbody')
+tablerows = tbody.find_all('tr')
+for row in tablerows:
+    info = row.find_all('td')
+    nameraw = info[1]
+    player = nameraw.text.strip()
+    nameslist.append(player)
+    stats = {};
+    counter = 0
+    for statname in range(len(info)):
+        valueraw = info[counter]
+        value = valueraw.text.strip()
+        theader = table.find('thead')
+        statnameslist = []
+        statnames = theader.find_all('th')
+        for statname in statnames:
+            statname=statname.text.strip()
+            statnameslist.append(statname)
+
+        stats[statnameslist[counter]] = value
+        counter+=1
+    if player not in masterdict:
+        addtodict(player, 2018, 'FANGRAPHS', stats)
+
+
+
+
+
+
+
+
+
+keyplayers = ['Bryce Harper', 'Max Scherzer', 'Craig Kimbrel']
+test(keyplayers)
