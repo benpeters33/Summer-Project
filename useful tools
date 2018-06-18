@@ -1,0 +1,20 @@
+
+
+See all stats scraped for any particular player:
+
+for stat in masterdict['Bryce Harper'][2018]['FANGRAPHS']:
+    print(stat, masterdict['Bryce Harper'][2018]['FANGRAPHS'][stat])
+
+
+Sorted list of leaders in particular stat (This case top 50 AVG):
+
+top50list = []
+for player in masterdict:
+    try:
+        pair = (masterdict[player][2018]['FANGRAPHS']['Name'], masterdict[player][2018]['FANGRAPHS']['AVG']);
+        top50list.append(pair)
+    except:
+        pass
+sortedtop50 = sorted(top50list, key = lambda x: x[1], reverse= True )
+for pair in sortedtop50[:50]:
+    print(pair)
