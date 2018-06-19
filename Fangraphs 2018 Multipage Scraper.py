@@ -51,7 +51,7 @@ for x in range(4):
             addtodict(player, 2018, 'FANGRAPHS', stat, value)
             stat_column+= 1
 
-#FANGRAPHS STARTING PITCHER SCRAPER
+#FANGRAPHS PITCHER SCRAPER
 page_index = 0
 for x in range(4):
     page = requests.get("https://www.fangraphs.com/leaders.aspx?pos=all&stats=pit&lg=all&qual=0&type="+str(page_index)+"&season=2018&month=0&season1=2018&ind=0&team=0&rost=0&age=0&filter=&players=0&page=1_500")
