@@ -5,17 +5,17 @@ from bs4 import BeautifulSoup
 
 masterdict = {}
 
-def addtodict(player, year, source, statname, value):
+def addtodict(player, source, year, statname, value):
     #Updates dict if player is in
     if player in masterdict:
-        masterdict[player][year][source][statname] = value
+        masterdict[player][source][year][statname] = value
     #Creates new entry into dict if player is not in dict
     else:
-        masterdict[player]={year:{source: {stat:value}}}
+        masterdict[player]={source:{year: {stat:value}}}
 
 def test(testplayers = ['Bryce Harper', 'Max Scherzer', 'Sean Doolittle']):
     for player in testplayers:
-        print(masterdict[player][2018]['FANGRAPHS'])
+        print(masterdict[player]['FANGRAPHS'][2018])
 
 #FANGRAPH BATTERS SCRAPER
 # Iterates through pages using counter index. RANGE(4) CAN BE CHANGE UP TO 8
@@ -48,10 +48,10 @@ for x in range(4):
             valueraw = player_row[stat_column]
             value = valueraw.text.strip()
             stat = statnameslist[stat_column]
-            addtodict(player, 2018, 'FANGRAPHS', stat, value)
+            addtodict(player, 'FANGRAPHS', 2018, stat, value)
             stat_column+= 1
 
-#FANGRAPHS PITCHER SCRAPER
+#FANGRAPHS STARTING PITCHER SCRAPER
 page_index = 0
 for x in range(4):
     page = requests.get("https://www.fangraphs.com/leaders.aspx?pos=all&stats=pit&lg=all&qual=0&type="+str(page_index)+"&season=2018&month=0&season1=2018&ind=0&team=0&rost=0&age=0&filter=&players=0&page=1_500")
@@ -81,7 +81,14 @@ for x in range(4):
             valueraw = player_row[stat_column]
             value = valueraw.text.strip()
             stat = statnameslist[stat_column]
-            addtodict(player, 2018, 'FANGRAPHS', stat, value)
+            addtodict(player, 'FANGRAPHS', 2018, stat, value)
             stat_column+= 1
 
-test()
+
+
+
+
+
+
+
+
